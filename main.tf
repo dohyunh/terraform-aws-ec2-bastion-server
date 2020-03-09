@@ -72,9 +72,7 @@ data "aws_route53_zone" "domain" {
 data "template_file" "user_data" {
   template = file("${path.module}/user_data.sh")
 
-  vars {
-    user_data       = "${join("\n", var.user_data)}"
-    welcome_message = "${var.stage}"
+  vars = {
     user_data       = join("\n", var.user_data)
     welcome_message = var.stage
     hostname        = "${var.name}.${join("",data.aws_route53_zone.domain.*.name)}"
